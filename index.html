@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>WINFUSER</title>
+    <style>
+        body { background: radial-gradient(circle, #800000 0%, #1a0000 100%); color: #B4846C; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; text-align: center; }
+        .card { background: rgba(255,255,255,0.03); border: 1px solid #B4846C; padding: 40px 20px; width: 80%; backdrop-filter: blur(10px); }
+        input { width: 100%; background: #000; border: 1px solid #B4846C; padding: 15px; color: #fff; text-align: center; letter-spacing: 3px; margin: 20px 0; box-sizing: border-box; }
+        button { width: 100%; background: #B4846C; color: #800000; border: none; padding: 15px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1 style="letter-spacing: 8px;">WINFUSER</h1>
+        <input type="text" id="k" placeholder="WNF-GLO-XXXX-XXXX">
+        <button onclick="v()">SEAL DEVICE</button>
+    </div>
+    <script>
+        const i = document.getElementById('k');
+        i.addEventListener('input', (e) => {
+            let v = e.target.value.replace(/[^A-Z0-9]/gi, '').toUpperCase();
+            let f = '';
+            for (let j = 0; j < v.length; j++) { if (j > 0 && j % 4 === 0) f += '-'; f += v[j]; }
+            e.target.value = f.substring(0, 19);
+        });
+        function v() { if(i.value.startsWith('WNF-GLO-')) { alert('Device Sealed.'); } else { alert('Invalid Key.'); } }
+    </script>
+</body>
+</html>
