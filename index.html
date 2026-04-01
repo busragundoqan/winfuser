@@ -4,39 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="icon.png">
-    <title>WINFUSER | Secure Node</title>
+    <title>WINFUSER | Secure Terminal</title>
     <style>
-        :root { --bordo: #800000; --rose-gold: #B4846C; --deep: #1a0000; --soft: #F5E6D3; }
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; background: radial-gradient(circle, var(--bordo) 0%, var(--deep) 100%); font-family: -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; overflow: hidden; }
-        .app-shell { width: 85%; max-width: 380px; background: rgba(255,255,255,0.02); border: 1px solid rgba(180,132,108,0.2); padding: 50px 30px; text-align: center; backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); box-shadow: 0 50px 100px rgba(0,0,0,0.9); border-radius: 2px; position: relative; }
-        .app-shell::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--rose-gold), transparent); }
-        .logo { font-size: 28px; letter-spacing: 12px; color: var(--soft); margin-bottom: 45px; font-weight: bold; }
-        input { width: 100%; background: rgba(0,0,0,0.6); border: 1px solid var(--rose-gold); padding: 18px; color: #fff; text-align: center; letter-spacing: 5px; font-size: 16px; margin-bottom: 25px; box-sizing: border-box; border-radius: 0; outline: none; -webkit-appearance: none; }
-        .btn { width: 100%; background: var(--rose-gold); color: var(--bordo); border: none; padding: 18px; font-weight: bold; letter-spacing: 4px; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 12px; }
-        .btn:active { background: var(--soft); transform: scale(0.98); }
-        #secure-gate { display: none; margin-top: 25px; }
+        :root { --bordo: #800000; --rose-gold: #B4846C; --soft: #F5E6D3; --deep: #1a0000; --sage: #8FBC8F; }
+        body, html { margin: 0; padding: 0; height: 100%; background: radial-gradient(circle, var(--bordo) 0%, var(--deep) 100%); font-family: -apple-system, sans-serif; color: var(--rose-gold); overflow-x: hidden; }
+        
+        /* Giriş Ekranı */
+        #login-screen { height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .app-shell { width: 85%; max-width: 380px; background: rgba(255,255,255,0.02); border: 1px solid rgba(180,132,108,0.2); padding: 50px 30px; text-align: center; backdrop-filter: blur(30px); box-shadow: 0 50px 100px rgba(0,0,0,0.9); }
+        input { width: 100%; background: rgba(0,0,0,0.6); border: 1px solid var(--rose-gold); padding: 18px; color: #fff; text-align: center; letter-spacing: 4px; font-size: 16px; margin-bottom: 25px; box-sizing: border-box; outline: none; }
+        .btn { width: 100%; background: var(--rose-gold); color: var(--bordo); border: none; padding: 18px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Ana Panel (Girişten Sonra) */
+        #main-panel { display: none; padding: 20px; animation: fadeIn 1s ease; }
+        .header { text-align: center; padding: 30px 0; border-bottom: 1px solid rgba(180,132,108,0.2); margin-bottom: 30px; }
+        .content-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(180,132,108,0.1); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+        .strategy-img { width: 100%; border-radius: 5px; border: 1px solid var(--rose-gold); margin-bottom: 15px; }
+        .seo-list { list-style: none; padding: 0; font-size: 14px; }
+        .seo-list li { padding: 10px 0; border-bottom: 1px solid rgba(180,132,108,0.05); color: var(--soft); }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
-    <div class="app-shell" id="ui">
-        <div class="logo">WINFUSER</div>
-        <div id="gatekeeper">
-            <p style="font-size: 10px; color: var(--rose-gold); letter-spacing: 3px; margin-bottom: 30px; opacity: 0.7;">ENTER GLOBAL LICENSE KEY</p>
-            <input type="text" id="licenseField" placeholder="WNF-GLO-XXXX-XXXX" maxlength="19" spellcheck="false" autocomplete="off">
-            <button class="btn" onclick="executeSecurity()">Seal & Activate</button>
+
+    <div id="login-screen">
+        <div class="app-shell">
+            <div style="font-size: 26px; letter-spacing: 10px; color: var(--soft); margin-bottom: 40px; font-weight: bold;">WINFUSER</div>
+            <input type="text" id="license" placeholder="WNF-GLO-XXXX-XXXX" maxlength="19">
+            <button class="btn" onclick="unlock()">Seal & Access</button>
         </div>
-        <div id="secure-gate">
-            <div style="color: #8FBC8F; font-size: 11px; letter-spacing: 2px;">● DEVICE SEALED</div>
-            <p style="color: var(--soft); font-size: 14px; margin-top: 30px;">Welcome, Member #001</p>
-            <div style="font-size: 10px; opacity: 0.5; margin-top: 20px; line-height: 2;">Synchronizing Global Node 01...<br>Fetching Daily SEO Keys...</div>
+    </div>
+
+    <div id="main-panel">
+        <div class="header">
+            <div style="font-size: 18px; letter-spacing: 5px; color: var(--soft);">WINFUSER GLOBAL</div>
+            <div style="font-size: 9px; color: var(--sage); margin-top: 10px;">● DEVICE ACTIVATED: NODE-01</div>
+        </div>
+
+        <div class="content-card">
+            <div style="font-size: 12px; margin-bottom: 15px; letter-spacing: 2px;">GÜNLÜK STRATEJİ KARTI</div>
+            <img src="strategy_01.png" class="strategy-img" alt="Daily Strategy">
+            <p style="font-size: 13px; opacity: 0.8; line-height: 1.6;">
+                Bugünkü odak noktamız: <strong>"Minimalist Modern Geçişler"</strong>. UGC videolarınızda Bordo tonlarını vurgulayın.
+            </p>
+        </div>
+
+        <div class="content-card">
+            <div style="font-size: 12px; margin-bottom: 15px; letter-spacing: 2px; color: var(--sage);">GİZLİ SEO ANAHTARLARI</div>
+            <ul class="seo-list">
+                <li>#InteriorDesign2026</li>
+                <li>#WabiSabiAesthetic</li>
+                <li>#GlobalCreatorNode</li>
+                <li>#LuxuryUGCSystems</li>
+                <li>#WinfuserGlobal</li>
+            </ul>
         </div>
     </div>
 
     <script>
-        // OTOMATİK TİRE (AUTO-HYPHEN) SİSTEMİ
-        const input = document.getElementById('licenseField');
+        // Otomatik Tire
+        const input = document.getElementById('license');
         input.addEventListener('input', (e) => {
             let v = e.target.value.replace(/[^A-Z0-9]/gi, '').toUpperCase();
             let f = '';
@@ -47,16 +75,13 @@
             e.target.value = f.substring(0, 19);
         });
 
-        // ŞİFRELENMİŞ DOĞRULAMA MANTIĞI (OBFUSCATED)
-        function executeSecurity() {
-            const _0x4f = input.value;
-            // Şifreli kontrol: "WNF-GLO-" mühürlü mü?
-            if (_0x4f["\x73\x74\x61\x72\x74\x73\x57\x69\x74\x68"]("\x57\x4e\x46\x2d\x47\x4c\x4f\x2d") && _0x4f["\x6c\x65\x6e\x67\x74\x68"] >= 0x13) {
-                document.getElementById("\x67\x61\x74\x65\x6b\x65\x65\x70\x65\x72")["\x73\x74\x79\x6c\x65"]["\x64\x69\x73\x70\x6c\x61\x79"] = "\x6e\x6f\x6e\x65";
-                document.getElementById("\x73\x65\x63\x75\x72\x65\x2d\x67\x61\x74\x65")["\x73\x74\x79\x6c\x65"]["\x64\x69\x73\x70\x6c\x61\x79"] = "\x62\x6c\x6f\x63\x6b";
-            } else {
-                alert("\x41\x63\x63\x65\x73\x73\x20\x44\x65\x6e\x69\x65\x64\x2e");
-            }
+        // Şifreli Geçiş
+        function unlock() {
+            const k = input.value;
+            if(k.startsWith('WNF-GLO-') && k.length >= 19) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-panel').style.display = 'block';
+            } else { alert("Access Denied: Invalid Key."); }
         }
     </script>
 </body>
