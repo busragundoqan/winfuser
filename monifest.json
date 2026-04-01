@@ -1,0 +1,7 @@
+{
+  "name": "WINFUSER",
+  "short_name": "WINFUSER",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#800000",
+  "theme_color": "#800000"
